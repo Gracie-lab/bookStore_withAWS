@@ -1,0 +1,53 @@
+{
+  "auth": {
+    "bookstoreamplifydc8b3959": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "s3f1311ed8": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "api": {
+    "bookstoreamplify": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authbookstoreamplifydc8b3959"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 10,
+                "description": "My api key"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "function": {
+    "processPayment": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "createOrder": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
+}
